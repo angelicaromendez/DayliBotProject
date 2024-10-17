@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Bot'
 ]
 
 MIDDLEWARE = [
@@ -76,9 +77,9 @@ WSGI_APPLICATION = 'DayliBot.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "DayliBot",
-        "USER": "postgres",
-        "PASSWORD": "admin",
+        "NAME": "daylibot",
+        "USER": "hackwoman",
+        "PASSWORD": "holahack",
         "HOST": "localhost",
         "PORT": "5432",  
     }
