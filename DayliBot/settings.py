@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'DayliBot.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "daylibot",
-        "USER": "hackwoman",
-        "PASSWORD": "holahack",
+        "NAME": "DayliBot",
+        "USER": "postgres",
+        "PASSWORD": "admin",
         "HOST": "localhost",
         "PORT": "5432",  
     }
