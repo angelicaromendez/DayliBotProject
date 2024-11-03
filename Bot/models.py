@@ -5,17 +5,26 @@ class Team(models.Model):
     team_name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table = 'team'
+
 class Member(models.Model):
     username = models.CharField(max_length=100)
     discord_id = models.CharField(max_length=100, unique=True)
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table = 'member'
+
 class Sprint(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'sprint'
 
 class Commitment(models.Model):
     sprint = models.ForeignKey(Sprint, on_delete=models.CASCADE)
@@ -24,15 +33,24 @@ class Commitment(models.Model):
     completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table = 'commitment'
+
 class VoiceChannelLog(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     channel_name = models.CharField(max_length=100)
     joined_at = models.DateTimeField()
     left_at = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        db_table = 'voice_channel_log'
+
 class Question(models.Model):
     question_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'question'
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -40,7 +58,13 @@ class Answer(models.Model):
     answer_text = models.TextField()
     answered_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table = 'answer'
+
 class Checklist(models.Model):
     commitment = models.ForeignKey(Commitment, on_delete=models.CASCADE)
     check_date = models.DateField()
     status = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'checklist'
