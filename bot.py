@@ -3,6 +3,10 @@ from decouple import config
 import discord
 from discord.ext import commands
 from django.core.wsgi import get_wsgi_application
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
 
 # Obtener el token desde .env
 TOKEN = config('DISCORD_BOT_TOKEN')
@@ -18,13 +22,22 @@ intents.message_content = True  # Asegúrate de habilitar esto si necesitas cont
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+@bot.command()
+async def ping(ctx):
+    await ctx.send('Pong!')
+
+
 @bot.event
 async def on_ready():
     print(f'Bot conectado como {bot.user}')
 
 @bot.command()
 async def hello(ctx):
-    await ctx.send('¡Hola! Soy tu bot de Discord.')
+    try:
+        await ctx.send('¡Hola! Soy tu bot de Discord.')
+    except Exception as e:
+        print(f'Error en el comando hello: {e}')
+
 
 @bot.command()
 async def iniciar_sprint(ctx, duracion: int):
@@ -46,13 +59,23 @@ async def hora_lanzamiento(ctx, hora: str):
     # Guardar la hora de lanzamiento
     await ctx.send(f'La hora de lanzamiento será a las {hora}.')
 
+#@bot.event
+#async def on_message(message):
+ #   if message.author == bot.user:
+  #      return
+    # Aquí puedes manejar el almacenamiento de respuestas y hacer que sean visibles
+   # await message.channel.send(f'{message.author}: {message.content}')
+#preguntas = []
+
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
-    # Aquí puedes manejar el almacenamiento de respuestas y hacer que sean visibles
-    await message.channel.send(f'{message.author}: {message.content}')
-preguntas = []
+    
+    # Aquí puedes manejar cualquier lógica que necesites antes de procesar comandos
+
+    # Procesar comandos después de manejar el mensaje
+    await bot.process_commands(message)
 
 @bot.command()
 async def preguntar(ctx, pregunta: str):
@@ -134,9 +157,13 @@ async def compromisos(ctx, *compromisos: str):
     compromisos_sprint[ctx.guild.name] = compromisos
     await ctx.send(f'Compromisos del equipo registrados: {", ".join(compromisos)}.')
 
+@bot.command()
+async def test(ctx):
+    await ctx.send('El bot está funcionando.')
 
 
 
 # Iniciar el bot
-bot.run('YOUR_DISCORD_BOT_TOKEN')
+bot.run(TOKEN)
+
 
