@@ -14,6 +14,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default-unsafe-secret-key')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -97,8 +98,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+# Define la URL base para los archivos estáticos
+STATIC_URL = '/static/'
 
+# Define el directorio donde Django almacenará los archivos estáticos
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Si quieres servir archivos estáticos adicionales desde un directorio de tu elección:
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Si tienes archivos estáticos adicionales en la carpeta 'static'
+]
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

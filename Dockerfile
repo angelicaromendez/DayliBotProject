@@ -1,20 +1,21 @@
-# Dockerfile para Django
-FROM python:3.10-alpine
+# Usa una imagen base de Python 3.9 o superior
+FROM python:3.9-slim
 
-# Instalar las dependencias necesarias
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
+# Instala el cliente de PostgreSQL para usar pg_isready
+RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
 
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el archivo de dependencias y las instala
-COPY requirements.txt /app/
+# Copia el archivo requirements.txt al contenedor y lo instala
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia el código de la aplicación Django al contenedor
-COPY . /app/
+# Copia todos los archivos de la aplicación al contenedor
+COPY . .
 
-# Expone el puerto que usará Django (normalmente el 8000)
-EXPOSE 8000
+# Expone el puerto 8000 para el servidor de Django
+EXPOSE 8001
 
-# Comando para iniciar el servidor de desarrollo de Django
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Comando por defecto para correr el servidor de Django
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8001"]
