@@ -1,0 +1,4 @@
+Django>=5.1.1
+psycopg2-binary
+dj-database-url
+python-dotenv
