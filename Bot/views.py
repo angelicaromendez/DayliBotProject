@@ -18,24 +18,25 @@ class CreateBotView(APIView):
         serializer = BotSerializer(data=data)
         serializer.is_valid(raise_exception=True)   
         serializer.save()
-
-        return Response ({'message': 'Bot created successfully'}, status= status.HTTP_201_CREATED)
+        return Response ({'message': 'Respuesta guardada exitosamente'}, status= status.HTTP_201_CREATED)
 
 class RetrieveBotView(APIView):
     
-    def get(self, request, bot_id):
-        bots_obj = get_object_or_404(Bot, id=bot_id)
-        serializer = BotSerializer(bots_obj)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-class UpdateBotView(APIView):
+    def get(self, bot_id):
+        bot_obj = get_object_or_404(Bot, id=bot_id)
+        serializer = BotSerializer(bot_obj)
+        return Response(serializer.data)
     
     def put(self, request, bot_id):
-        data = request.data
-        bots_obj = get_object_or_404(Bot, id=bot_id)
-        serializer = BotSerializer(instance=bots_obj, data=data)
+        bot_obj = get_object_or_404(Bot, id=bot_id)
+        serializer = BotSerializer(instance=bot_obj, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-
-        return Response({'message': 'Bot updated successfully'}, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+    def delete(self, request, bot_id):
+        bot_obj = get_object_or_404(Bot, id=bot_id)
+        bot_obj.status = False
+        bot_obj.save()
+        return Response({'message': 'Información eliminada correctamente'}, status=status.HTTP_200_OK)
