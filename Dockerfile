@@ -18,5 +18,5 @@ COPY . .
 EXPOSE 8001
 
 # Comando por defecto para correr el servidor de Django
-#CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8001"]
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "DayliBot.wsgi:application"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8001"]
+#CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "DayliBot.wsgi:application"]
