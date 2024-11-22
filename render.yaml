@@ -12,8 +12,8 @@ services:
     name: dayli_bot_app
     runtime: python
     plan: free
-    buildCommand: "./build.sh"
-    startCommand: gunicorn DayliBot.wsgi:application
+    buildCommand: chmod +x build.sh
+    startCommand: ./build.sh
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -27,5 +27,5 @@ services:
         value: admin@example.com
       - key: DJANGO_SUPERUSER_PASSWORD
         generateValue: true
-      - key: WEB_CONCURRENCY
-        value: 4
+      - key: PORT
+        value: 8000
