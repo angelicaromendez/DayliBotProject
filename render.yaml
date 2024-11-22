@@ -8,7 +8,9 @@ services:
     dockerfilePath: Dockerfile
     envVars:
       - key: DATABASE_URL
-        value: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+        fromDatabase:
+          name: dayli_bot_db
+          property: connectionString
       - key: DJANGO_SUPERUSER_USERNAME
         value: ${DJANGO_SUPERUSER_USERNAME}
       - key: DJANGO_SUPERUSER_EMAIL
