@@ -12,8 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = os.getenv('SECRET_KEY', 'default-unsafe-secret-key')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -57,26 +56,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DayliBot.wsgi.application'
 
-# Database configuration using environment variables
-if os.getenv("DOCKERIZED") == "true":
-    # Configuración específica para Docker
-    DATABASES = {
-     'default': dj_database_url.config(
-        conn_max_age=600,
-    )
 
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600)
 }
-else:
-    # Configuración general o para desarrollo local
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=os.getenv(
-                "DATABASE_URL",
-                "postgres://user:password@localhost:5432/dbname"
-            ),
-            conn_max_age=600,
-        )
-    }
+# # Database configuration using environment variables
+# if os.getenv("DOCKERIZED") == "true":
+#     # Configuración específica para Docker
+#     DATABASES = {
+#      'default': dj_database_url.config(
+#         conn_max_age=600,
+#     )
+
+# }
+# else:
+#     # Configuración general o para desarrollo local
+#     DATABASES = {
+#         "default": dj_database_url.config(
+#             default=os.getenv(
+#                 "DATABASE_URL",
+#                 "postgres://user:password@localhost:5432/dbname"
+#             ),
+#             conn_max_age=600,
+#         )
+#     }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
