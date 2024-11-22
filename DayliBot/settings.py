@@ -60,8 +60,12 @@ WSGI_APPLICATION = 'DayliBot.wsgi.application'
 # Database configuration using environment variables
 if os.getenv("DOCKERIZED") == "true":
     # Configuración específica para Docker
-   DATABASES = {
-      'default': dj_database_url.config(conn_max_age=600)
+    DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+    )
+
 }
 else:
     # Configuración general o para desarrollo local
