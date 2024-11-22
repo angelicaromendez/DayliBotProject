@@ -4,3 +4,4 @@ dj-database-url
 python-dotenv
 gunicorn
 djangorestframework
+uvicorn
