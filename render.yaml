@@ -1,26 +1,31 @@
 # render.yaml
+databases:
+  - name: dayli_bot_db
+    databaseName: dayli_bot
+    user: dayli_bot
+    plan: free
+    region: oregon
+    postgresVersion: 13
+
 services:
   - type: web
     name: dayli_bot_app
-    env: docker
+    runtime: python
     plan: free
-    repo: https://github.com/angelicaromendez/DayliBotProject
-    branch: main
-    dockerfilePath: Dockerfile
+    buildCommand: "./build.sh"
+    startCommand: gunicorn DayliBot.wsgi:application
     envVars:
       - key: DATABASE_URL
-        value: "postgres://USER:PASSWORD@HOST:PORT/DATABASE"  # Replace with your actual connection string
+        fromDatabase:
+          name: dayli_bot_db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
       - key: DJANGO_SUPERUSER_USERNAME
-        value: "admin"
+        value: admin
       - key: DJANGO_SUPERUSER_EMAIL
-        value: "admin@example.com"
+        value: admin@example.com
       - key: DJANGO_SUPERUSER_PASSWORD
-        value: "adminpassword"
-    healthCheckPath: "/"
-    autoDeploy: true
-
-databases:
-  - name: dayli_bot_db
-    plan: free
-    postgresVersion: 13
-    region: oregon
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
