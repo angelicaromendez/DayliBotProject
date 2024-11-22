@@ -9,4 +9,13 @@ COPY . .
 
 ENV PORT=8000
 
-CMD gunicorn --bind 0.0.0.0:$PORT DayliBot.wsgi:application
+# Cambiar CMD para ejecutar migraciones y crear superusuario
+CMD ["/bin/bash", "-c", "\
+    echo 'Applying migrations...' && \
+    python manage.py migrate && \
+    echo 'Creating superuser...' && \
+    python manage.py createsuperuser --noinput \
+      --username $DJANGO_SUPERUSER_USERNAME \
+      --email $DJANGO_SUPERUSER_EMAIL || true && \
+    echo 'Starting Gunicorn...' && \
+    gunicorn --bind 0.0.0.0:$PORT DayliBot.wsgi:application"]
