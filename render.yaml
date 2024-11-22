@@ -1,3 +1,4 @@
+# render.yaml
 services:
   - type: web
     name: dayli_bot_app
@@ -12,11 +13,11 @@ services:
           name: dayli_bot_db
           property: connectionString
       - key: DJANGO_SUPERUSER_USERNAME
-        value: "admin"  # Reemplaza con tu usuario admin
+        value: "admin"
       - key: DJANGO_SUPERUSER_EMAIL
-        value: "admin@example.com"  # Reemplaza con tu email
+        value: "admin@example.com"
       - key: DJANGO_SUPERUSER_PASSWORD
-        value: "adminpassword"  # Reemplaza con tu contraseña
+        value: "adminpassword"
     healthCheckPath: "/"
     autoDeploy: true
 

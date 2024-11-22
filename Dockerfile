@@ -1,3 +1,4 @@
+# Dockerfile
 FROM python:3.9-slim
 
 WORKDIR /app
@@ -9,7 +10,6 @@ COPY . .
 
 ENV PORT=8000
 
-# Cambiar CMD para ejecutar migraciones y crear superusuario
 CMD ["/bin/bash", "-c", "\
     echo 'Applying migrations...' && \
     python manage.py migrate && \
