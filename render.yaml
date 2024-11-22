@@ -3,7 +3,7 @@ services:
     name: dayli_bot_app
     env: docker
     plan: free
-    repo: https://github.com/angelicaromendez/DayliBotProject 
+    repo: https://github.com/angelicaromendez/DayliBotProject
     branch: main
     dockerfilePath: Dockerfile
     envVars:
@@ -12,12 +12,12 @@ services:
           name: dayli_bot_db
           property: connectionString
       - key: DJANGO_SUPERUSER_USERNAME
-        value: ${DJANGO_SUPERUSER_USERNAME}
+        value: "admin"  # Reemplaza con tu usuario admin
       - key: DJANGO_SUPERUSER_EMAIL
-        value: ${DJANGO_SUPERUSER_EMAIL}
+        value: "admin@example.com"  # Reemplaza con tu email
       - key: DJANGO_SUPERUSER_PASSWORD
-        value: ${DJANGO_SUPERUSER_PASSWORD}
-    healthCheckPath: /
+        value: "adminpassword"  # Reemplaza con tu contraseña
+    healthCheckPath: "/"
     autoDeploy: true
 
 databases:
@@ -25,10 +25,3 @@ databases:
     plan: free
     postgresVersion: 13
     region: oregon
-    envVars:
-      - key: POSTGRES_DB
-        value: ${POSTGRES_DB}
-      - key: POSTGRES_USER
-        value: ${POSTGRES_USER}
-      - key: POSTGRES_PASSWORD
-        value: ${POSTGRES_PASSWORD}
